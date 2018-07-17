@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>带缩略图的图片切换效果</title>
+    <style>
+        #wrap{
+            width: 700px;
+            height: 500px;
+            margin: 0 auto;
+        }
+        ul{
+            margin-left: 235px;
+        }
+        ul li{
+            list-style: none;
+            float: left;
+            margin-right: 10px;
+            position: relative;
+            width: 10px;
+            height: 10px;
+            border: 1px solid #b8b8b8;
+            border-radius: 50%;
+            background: #b8b8b8;
+        }
+        ul li:hover,ul .active{
+            border: 1px solid #000;
+            background: #000;
+        }
+        li img{
+            width: 120px;
+            height: 60px;
+            position: absolute;
+            top: -65px;
+            left: -40px;
+            display: none;
+        }
+        #showBig{
+            width: 700px;
+            height: 480px;
+        }
+        #bigPic{
+            position: relative;
+        }
+        #prev img,#next img{
+            display: block;
+            width:50px;
+            height: 50px;
+            position: absolute;
+            top: 200px;
+        }
+        #prev img{
+            left: 5px;
+        }
+        #next img{
+            right: 5px;
+        }
+    </style>
+    <script>
+        window.onload  = function () {
+            var oUl = document.getElementById('sli');
+            var aLi = oUl.getElementsByTagName('li');
+            var oBig = document.getElementById('showBig');
+            var prev = document.getElementById('prev');
+            var next = document.getElementById('next');
+            var arrSrc = ['img/1.jpg','img/2.jpg','img/3.jpg','img/4.jpg','img/5.jpg','img/6.jpg'];
+            var tindex =  0;
+            for(let i=0; i<aLi.length ; i++){
+                aLi[i].onmouseover = function () {
+                    aLi[i].getElementsByTagName('img')[0].style.display = 'block';
+                }
+                aLi[i].onmouseout = function () {
+                    aLi[i].getElementsByTagName('img')[0].style.display = 'none';
+                }
+                aLi[i].onclick = function () {
+                    aLi[tindex].className = '';
+                    oBig.src = arrSrc[i];
+                    this.className = 'active';
+                    tindex = i;
+                }
+            }
+            prev.onmouseover = function () {
+                this.getElementsByTagName('img')[0].src = "img/l2.png";
+            }
+            prev.onmouseout = function () {
+                this.getElementsByTagName('img')[0].src = "img/l1.png";
+            }
+            prev.onclick = function(){
+                aLi[tindex].className = '';
+                tindex -- ;
+                if(tindex<0) tindex = aLi.length-1;
+                oBig.src = arrSrc[tindex];
+                aLi[tindex].className = 'active';
+            }
+            next.onclick = function(){
+                aLi[tindex].className = '';
+                tindex ++ ;
+                if(tindex>aLi.length-1) tindex = 0;
+                oBig.src = arrSrc[tindex];
+                aLi[tindex].className = 'active';
+            }
+            next.onmouseover = function () {
+                this.getElementsByTagName('img')[0].src = "img/r2.png";
+            }
+            next.onmouseout = function () {
+                this.getElementsByTagName('img')[0].src = "img/r1.png";
+            }
+        }
+    </script>
+</head>
+<body>
+<div id="wrap">
+    <div id="content">
+        <div id="bigPic">
+            <img id="showBig" src="img/1.jpg" alt="">
+            <a id="prev" href="javascript:;"><img src="img/l1.png" alt=""></a>
+            <a id="next" href="javascript:;"><img src="img/r1.png" alt=""></a>
+        </div>
+        <ul id="sli">
+            <li class="active">
+                <img src="img/1.jpg" alt="">
+            </li>
+            <li>
+                <img src="img/2.jpg" alt="">
+            </li>
+            <li>
+                <img src="img/3.jpg" alt="">
+            </li>
+            <li>
+                <img src="img/4.jpg" alt="">
+            </li>
+            <li>
+                <img src="img/5.jpg" alt="">
+            </li>
+            <li>
+                <img src="img/6.jpg" alt="">
+            </li>
+        </ul>
+
+    </div>
+</div>
+</body>
+</html>
